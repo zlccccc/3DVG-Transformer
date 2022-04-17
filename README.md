@@ -4,6 +4,8 @@ This repository is for the **ICCV 2021** paper "[3DVG-Transformer: Relation Mode
 
 Our method "3DVG-Transformer+" is the **1st method** on the [ScanRefer benchmark](http://kaldir.vc.in.tum.de/scanrefer_benchmark/) (2021/3 - 2021/11) and is the **winner** of the CVPR2021 [1st Workshop on Language for 3D Scenes](https://language3dscenes.github.io/)
 
+:star2: 3DVG-Transformer+ achieves comparable results with papers published in [CVPR2022]. :star2:
+
 ![image-Model](demo/Model.png)
 
 ## Introduction
