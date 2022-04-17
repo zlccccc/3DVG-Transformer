@@ -2,10 +2,9 @@
 
 This repository is for the **ICCV 2021** paper "[3DVG-Transformer: Relation Modeling for Visual Grounding on Point Clouds](https://openaccess.thecvf.com/content/ICCV2021/papers/Zhao_3DVG-Transformer_Relation_Modeling_for_Visual_Grounding_on_Point_Clouds_ICCV_2021_paper.pdf)"  
 
-This method is the 1st method on the [ScanRefer benchmark](http://kaldir.vc.in.tum.de/scanrefer_benchmark/) (2021/3 - 2021/11), and is the winner of CVPR2021 [1st Workshop on Language for 3D Scenes](https://language3dscenes.github.io/)
+Our method "3DVG-Transformer+" is the 1st method on the [ScanRefer benchmark](http://kaldir.vc.in.tum.de/scanrefer_benchmark/) (2021/3 - 2021/11), and is the winner of CVPR2021 [1st Workshop on Language for 3D Scenes](https://language3dscenes.github.io/)
 
 ![image-Model](demo/Model.png)
-
 
 ## Introduction
 
@@ -136,13 +135,20 @@ Note that the flags must match the ones set before training. The training inform
 <!-- If you would like to try out the pre-trained models, please download the model weights and extract the folder to `outputs/`. Note that the results are higher than before because of a few iterations of code refactoring and bug fixing.-->
 
 ## Changelog
-04/17/2022: Update Readme.md.
 
-04/12/2022: Release the codes of 3DVG-Transformer.
+2022/04: Update Readme.md.
+
+2022/04: Release the codes of 3DVG-Transformer.
+
+2021/07 3DVG-Transformer is accepted at ICCV 2021.
+
+2021/06 3DVG-Transformer+ won the ScanRefer Challenge in the CVPR2021 [1st Workshop on Language for 3D Scenes](https://language3dscenes.github.io/).
+
+2021/04 3DVG-Transformer+ achieves 1st place in [ScanRefer leaderboard](http://kaldir.vc.in.tum.de/scanrefer_benchmark/)
 
 ## Citation
 
-If you use the ScanRefer data or code in your work, please kindly cite our work 3DVG-Transformer and the original ScanRefer/ScanNet paper:
+If you use the codes in your work, please kindly cite our work 3DVG-Transformer and the original ScanRefer paper:
 
 ```
 @inproceedings{zhao2021_3DVG_Transformer,
@@ -159,14 +165,6 @@ If you use the ScanRefer data or code in your work, please kindly cite our work 
     pages={202--221},
     journal={ECCV},
     year={2020}
-}
-
-@inproceedings{dai2017scannet,
-    title={{Scannet}: Richly-annotated 3d reconstructions of indoor scenes},
-    author={Dai, Angela and Chang, Angel X and Savva, Manolis and Halber, Maciej and Funkhouser, Thomas and Nie{\ss}ner, Matthias},
-    booktitle={CVPR},
-    pages={5828--5839},
-    year={2017}
 }
 ```
 
