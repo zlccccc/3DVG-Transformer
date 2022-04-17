@@ -127,6 +127,41 @@ The generated .ply or .obj files could be visualized in software such as **MeshL
 
 ![image-Results](demo/Results.png)
 
+settings:
+3D Only (XYZ+RGB): --use_color --use_normal
+2D+3D (XYZ+Multiview): --use_multiview --use_normal
+
+|             Validation Set             |             |          |  Unique  |  Unique | Multiple | Multiple |  Overall | Overall |
+|:--------------------------------------:|:-----------:|:--------:|:--------:|:-------:|:--------:|:--------:|:--------:|:-------:|
+|                 Methods                | Publication | Modality | Acc@0.25 | Acc@0.5 | Acc@0.25 |  Acc@0.5 | Acc@0.25 | Acc@0.5 |
+|                  SCRC                  |    CVPR16   |    2D    |   24.03  |   9.22  |   17.77  |   5.97   |   18.70  |   6.45  |
+|                One-Stage               |    ICCV19   |    2D    |   29.32  |  22.82  |   18.72  |   6.49   |   20.38  |   9.04  |
+|                                        |             |          |          |         |          |          |          |         |
+|                ScanRefer               |   ECCV2020  |    3D    |   67.64  |  46.19  |   32.06  |   21.26  |   38.97  |  26.10  |
+|                  TGNN                  |   AAAI2021  |    3D    |   68.61  |  56.80  |   29.84  |   23.18  |   37.37  |  29.70  |
+|              InstanceRefer             |   ICCV2021  |    3D    |   77.45  |  66.83  |   31.27  |   24.77  |   40.23  |  32.93  |
+|                   SAT                  |   ICCV2021  |    3D    |   73.21  |  50.83  |   37.64  |   25.16  |   44.54  |  30.14  |
+|         3DVG-Transformer (ours)        |   ICCV2021  |    3D    |   77.16  |  58.47  |   38.38  |   28.70  |   45.90  |  34.47  |
+|               BEAUTY-DETR              |      -      |    3D    |     -    |    -    |     -    |     -    |   46.40  |    -    |
+|                  3DJCG                 |   CVPR2022  |    3D    |   78.75  |  61.30  |   40.13  |   30.08  |   47.62  |  36.14  |
+|                 3D-SPS                 |   CVPR2022  |    3D    |   81.63  |  64.77  |   39.48  |   29.61  |   47.65  |  36.43  |
+|                                        |             |          |          |         |          |          |          |         |
+|                ScanRefer               |   ECCV2020  |  2D + 3D |   76.33  |  53.51  |   32.73  |   21.11  |   41.19  |  27.40  |
+|                  TGNN                  |   AAAI2021  |  2D + 3D |   68.61  |  56.80  |   29.84  |   23.18  |   37.37  |  29.70  |
+|              InstanceRefer             |   ICCV2021  |  2D + 3D |   75.72  |  64.66  |   29.41  |   22.99  |   38.40  |  31.08  |
+|         3DVG-Transformer (Ours)        |   ICCV2021  |  2D + 3D |   81.93  |  60.64  |   39.30  |   28.42  |   47.57  |  34.67  |
+| 3DVG-Transformer+(Ours, this codebase) |      -      |  2D + 3D |   83.25  |  61.95  |   41.20  |   30.29  |   49.36  |  36.43  |
+|                  3DJCG                 |   CVPR2022  |  2D + 3D |   83.47  |  64.34  |   41.39  |   30.82  |   49.56  |  37.33  |
+|                 3D-SPS                 |   CVPR2022  |  2D + 3D |   84.12  |  66.72  |   40.32  |   29.82  |   48.82  |  36.98  |
+
+|     Online Benchmark    |          |  Unique  |  Unique | Multiple | Multiple |  Overall | Overall |
+|:-----------------------:|:--------:|:--------:|:-------:|:--------:|:--------:|:--------:|:-------:|
+|         Methods         | Modality | Acc@0.25 | Acc@0.5 | Acc@0.25 |  Acc@0.5 | Acc@0.25 | Acc@0.5 |
+|        ScanRefer        |  2D + 3D |   68.59  |  43.53  |   34.88  |   20.97  |   42.44  |  26.03  |
+|           TGNN          |  2D + 3D |   68.34  |  58.94  |   33.12  |   25.26  |   41.02  |  32.81  |
+|      InstanceRefer      |  2D + 3D |   77.82  |  66.69  |   34.57  |   26.88  |   44.27  |  35.80  |
+| 3DVG-Transformer (Ours) |  2D + 3D |   75.76  |  55.15  |   42.24  |   29.33  |   49.76  |  35.12  |
+| 3DVG-Transformer+(Ours) |  2D + 3D |   77.33  |  57.87  |   43.70  |   31.02  |   51.24  |  37.04  |
 
 
 ## Changelog
