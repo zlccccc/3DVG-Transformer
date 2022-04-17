@@ -1,28 +1,19 @@
-# ScanRefer: 3D Object Localization in RGB-D Scans using Natural Language
+# 3DVG-Transformer: Relation Modeling for Visual Grounding on Point Clouds
 
-<p align="center"><img src="demo/ScanRefer.gif" width="600px"/></p>
+<p align="center"><img src="demo/Visualization.png" width="600px"/></p>
+
+
 
 ## Introduction
 
-We introduce the new task of 3D object localization in RGB-D scans using natural language descriptions. As input, we assume a point cloud of a scanned 3D scene along with a free-form description of a specified target object. To address this task, we propose ScanRefer, where the core idea is to learn a fused descriptor from 3D object proposals and encoded sentence embeddings. This learned descriptor then correlates the language expressions with the underlying geometric features of the 3D scan and facilitates the regression of the 3D bounding box of the target object. In order to train and benchmark our method, we introduce a new ScanRefer dataset, containing 51,583 descriptions of 11,046 objects from 800 [ScanNet](http://www.scan-net.org/) scenes. ScanRefer is the first large-scale effort to perform object localization via natural language expression directly in 3D.
+Visual grounding on 3D point clouds is an emerging vision and language task that benefits various applications in understanding the 3D visual world. By formulating this task as a grounding-by-detection problem, lots of recent works focus on how to exploit more powerful detectors and comprehensive language features, but (1) how to model complex relations for generating context-aware object proposals and (2) how to leverage proposal relations to distinguish the true target object from similar proposals are not fully studied yet. Inspired by the well-known transformer architecture, we propose a relation-aware visual grounding method on 3D point clouds, named as 3DVG-Transformer, to fully utilize the contextual clues for relation-enhanced proposal generation and cross-modal proposal disambiguation, relation-aware proposal generation and cross-modal feature fusion, which are enabled by a newly designed coordinate-guided contextual aggregation (CCA) module in the object proposal generation stage, and a multiplex attention (MA) module in the cross-modal feature fusion stage. With the aid of two proposed feature augmentation strategies to alleviate overfitting, we validate that our 3DVG-Transformer outperforms the state-of-the-art methods by a large margin, on two point cloud-based visual grounding datasets, ScanRefer and Nr3D/Sr3D from ReferIt3D, especially for complex scenarios containing multiple objects of the same category.
 
-Please also check out the project website [here](https://daveredrum.github.io/ScanRefer/).
+For additional detail, please see our paper:  
+"[3DVG-Transformer: Relation Modeling for Visual Grounding on Point Clouds](https://openaccess.thecvf.com/content/ICCV2021/papers/Zhao_3DVG-Transformer_Relation_Modeling_for_Visual_Grounding_on_Point_Clouds_ICCV_2021_paper.pdf?ref=https://githubhelp.com)"  
 
-For additional detail, please see the ScanRefer paper:  
-"[ScanRefer: 3D Object Localization in RGB-D Scans using Natural Language](https://arxiv.org/abs/1912.08830)"  
-by [Dave Zhenyu Chen](https://www.niessnerlab.org/members/zhenyu_chen/profile.html), [Angel X. Chang](https://angelxuanchang.github.io/) and [Matthias Nießner](https://www.niessnerlab.org/members/matthias_niessner/profile.html)  
-from [Technical University of Munich](https://www.tum.de/en/) and [Simon Fraser University](https://www.sfu.ca/).
 
-## :star2: Benchmark Challenge :star2:
-We provide the ScanRefer Benchmark Challenge for benchmarking your model automatically on the hidden test set! Learn more at our [benchmark challenge website](http://kaldir.vc.in.tum.de/scanrefer_benchmark/).
-After finishing training the model, please download [the benchmark data](http://kaldir.vc.in.tum.de/scanrefer_benchmark_data.zip) and put the unzipped `ScanRefer_filtered_test.json` under `data/`. Then, you can run the following script the generate predictions:
-```shell
-python scripts/predict.py --folder <folder_name> --use_color
-```
-Note that the flags must match the ones set before training. The training information is stored in `outputs/<folder_name>/info.json`. The generated predictions are stored in `outputs/<folder_name>/pred.json`.
-For submitting the predictions, please compress the `pred.json` as a .zip or .7z file and follow the [instructions](http://kaldir.vc.in.tum.de/scanrefer_benchmark/documentation) to upload your results.
 
-## Dataset
+## Dataset & Setup (Please Refer to ScanRefer)
 
 If you would like to access to the ScanRefer dataset, please fill out [this form](https://forms.gle/aLtzXN12DsYDMSXX6). Once your request is accepted, you will receive an email with the download link.
 
@@ -43,8 +34,10 @@ wget <download_link>
 "token": [a list of tokens from the tokenized description] 
 ```
 
-## Setup
-The code is tested on Ubuntu 16.04 LTS & 18.04 LTS with PyTorch 1.2.0 CUDA 10.0 installed. There are some issues with the newer version (>=1.3.0) of PyTorch. You might want to make sure you have installed the correct version. Otherwise, please execute the following command to install PyTorch:
+### Setup
+The code is tested on Ubuntu 16.04 LTS & 18.04 LTS with PyTorch 1.2.0 CUDA 10.0 installed. 
+
+Please refer to the initial [ScanRefer](https://daveredrum.github.io/ScanRefer/) for newer version (>=1.3.0) of PyTorch.
 
 ```shell
 conda install pytorch==1.2.0 torchvision==0.4.0 cudatoolkit=10.0 -c pytorch
@@ -75,8 +68,7 @@ python batch_load_scannet_data.py
 > ```shell
 > python visualize.py --scene_id scene0000_00
 > ```
-<!-- 5. (Optional) Download the preprocessed [multiview features (~36GB)](http://kaldir.vc.in.tum.de/enet_feats.hdf5) and put it under `data/scannet/scannet_data/`. -->
-5. (Optional) Pre-process the multiview features from ENet. 
+5. (Optional) Pre-process the multiview features from ENet [multiview features (~36GB)](http://kaldir.vc.in.tum.de/enet_feats.hdf5) and put it under `data/scannet/scannet_data/`. 
 
     a. Download [the ENet pretrained weights (1.4MB)](http://kaldir.vc.in.tum.de/ScanRefer/scannetv2_enet.pth) and put it under `data/`
     
@@ -85,213 +77,95 @@ python batch_load_scannet_data.py
     c. Change the data paths in `config.py` marked with __TODO__ accordingly.
 
     d. Extract the ENet features:
-    ```shell
-    python script/compute_multiview_features.py
-    ```
-
+    
     e. Project ENet features from ScanNet frames to point clouds; you need ~36GB to store the generated HDF5 database:
-    ```shell
-    python script/project_multiview_features.py --maxpool
-    ```
-    > You can check if the projections make sense by projecting the semantic labels from image to the target point cloud by:
-    > ```shell
-    > python script/project_multiview_labels.py --scene_id scene0000_00 --maxpool
-    > ```
+
+> ```shell
+> # Extraction:
+> python script/project_multiview_features.py --maxpool
+> # Visualization:
+> python script/project_multiview_labels.py --scene_id scene0000_00 --maxpool
+> ```
+
+### :star2: Benchmark Challenge :star2:
+
+Learn more at the [benchmark challenge website](http://kaldir.vc.in.tum.de/scanrefer_benchmark/).
+After finishing training the model, please download [the benchmark data](http://kaldir.vc.in.tum.de/scanrefer_benchmark_data.zip) and put the unzipped `ScanRefer_filtered_test.json` under `data/`. Then, you can run the following script the generate predictions:
+
+```shell
+python benchmark/predict.py --folder <folder_name> --use_color
+```
+
+Note that the flags must match the ones set before training. The training information is stored in `outputs/<folder_name>/info.json`. The generated predictions are stored in `outputs/<folder_name>/pred.json`.
+For submitting the predictions, please compress the `pred.json` as a .zip or .7z file and follow the [instructions](http://kaldir.vc.in.tum.de/scanrefer_benchmark/documentation) to upload your results.
 
 ## Usage
+
 ### Training
-To train the ScanRefer model with RGB values:
+To train the 3DVG-Transformer model with multiview features:
 ```shell
-python scripts/train.py --use_color
+python scripts/ScanRefer_train.py --use_multiview --use_normal --batch_size 8 --epoch 200 --lr 0.002 --coslr --tag 3dvg-trans+
 ```
+settings:
+XYZ: --use_normal
+XYZ+RGB: --use_color --use_normal
+XYZ+Multiview: --use_multiview --use_normal
+
 For more training options (like using preprocessed multiview features), please run `scripts/train.py -h`.
 
 ### Evaluation
 To evaluate the trained ScanRefer models, please find the folder under `outputs/` with the current timestamp and run:
 ```shell
-python scripts/eval.py --folder <folder_name> --reference --use_color --no_nms --force --repeat 5
+python scripts/ScanRefer_eval.py --folder <folder_name> --reference --use_color --no_nms --force --repeat 5
 ```
 Note that the flags must match the ones set before training. The training information is stored in `outputs/<folder_name>/info.json`
 
 ### Visualization
+![image-Visualization](demo/Visualization.png)
+
 To predict the localization results predicted by the trained ScanRefer model in a specific scene, please find the corresponding folder under `outputs/` with the current timestamp and run:
+
 ```shell
 python scripts/visualize.py --folder <folder_name> --scene_id <scene_id> --use_color
 ```
 Note that the flags must match the ones set before training. The training information is stored in `outputs/<folder_name>/info.json`. The output `.ply` files will be stored under `outputs/<folder_name>/vis/<scene_id>/`
 
-## Models
-For reproducing our results in the paper, we provide the following training commands and the corresponding pre-trained models:
+### Results
 
-<table>
-    <col>
-    <col>
-    <colgroup span="2"></colgroup>
-    <colgroup span="2"></colgroup>
-    <colgroup span="2"></colgroup>
-    <col>
-    <tr>
-        <th rowspan=2>Name</th>
-        <th rowspan=2>Command</th>
-        <th colspan=2 scope="colgroup">Unique</th>
-        <th colspan=2 scope="colgroup">Multiple</th>
-        <th colspan=2 scope="colgroup">Overall</th>
-        <th rowspan=2>Weights</th>
-    </tr>
-    <tr>
-        <td>Acc<!-- -->@<!-- -->0.25IoU</td>
-        <td>Acc<!-- -->@<!-- -->0.5IoU</td>
-        <td>Acc<!-- -->@<!-- -->0.25IoU</td>
-        <td>Acc<!-- -->@<!-- -->0.5IoU</td>
-        <td>Acc<!-- -->@<!-- -->0.25IoU</td>
-        <td>Acc<!-- -->@<!-- -->0.5IoU</td>
-    </tr>
-    <tr>
-        <td>xyz</td>
-        <td><pre lang="shell">python script/train.py --no_lang_cls</pre></td>
-        <td>63.98</td>					
-        <td>43.57</td>
-        <td>29.28</td>
-        <td>18.99</td>
-        <td>36.01</td>
-        <td>23.76</td>
-        <td><a href=http://kaldir.vc.in.tum.de/scanrefer_pretrained_XYZ.zip>weights</a></td>
-    </tr>
-    <tr>
-        <td>xyz+rgb</td>
-        <td><pre lang="shell">python script/train.py --use_color --no_lang_cls</pre></td>
-        <td>63.24</td>					
-        <td>41.78</td>
-        <td>30.06</td>
-        <td>19.23</td>
-        <td>36.5</td>
-        <td>23.61</td>
-        <td><a href=http://kaldir.vc.in.tum.de/scanrefer_pretrained_XYZ_COLOR.zip>weights</a></td>
-    </tr>
-    <tr>
-        <td>xyz+rgb+normals</td>
-        <td><pre lang="shell">python script/train.py --use_color --use_normal --no_lang_cls</pre></td>
-        <td>64.63</td>					
-        <td>43.65</td>
-        <td>31.89</td>
-        <td>20.77</td>
-        <td>38.24</td>
-        <td>25.21</td>
-        <td><a href=http://kaldir.vc.in.tum.de/scanrefer_pretrained_XYZ_COLOR_NORMAL.zip>weights</a></td>
-    </tr>
-    <tr>
-        <td>xyz+multiview</td>
-        <td><pre lang="shell">python script/train.py --use_multiview --no_lang_cls</pre></td>
-        <td>77.2</td>					
-        <td>52.69</td>
-        <td>32.08</td>
-        <td>19.86</td>
-        <td>40.84</td>
-        <td>26.23</td>
-        <td><a href=http://kaldir.vc.in.tum.de/scanrefer_pretrained_XYZ_MULTIVIEW.zip>weights</a></td>
-    </tr>
-    <tr>
-        <td>xyz+multiview+normals</td>
-        <td><pre lang="shell">python script/train.py --use_multiview --use_normal --no_lang_cls</pre></td>
-        <td>78.22</td>					
-        <td>52.38</td>
-        <td>33.61</td>
-        <td>20.77</td>
-        <td>42.27</td>
-        <td>26.9</td>
-        <td><a href=http://kaldir.vc.in.tum.de/scanrefer_pretrained_XYZ_MULTIVIEW_NORMAL.zip>weights</a></td>
-    </tr>
-    <tr>
-        <td>xyz+lobjcls</td>
-        <td><pre lang="shell">python script/train.py</pre></td>
-        <td>64.31</td>										
-        <td>44.04</td>
-        <td>30.77</td>
-        <td>19.44</td>
-        <td>37.28</td>
-        <td>24.22</td>
-        <td><a href=http://kaldir.vc.in.tum.de/scanrefer_pretrained_XYZ_LANGCLS.zip>weights</a></td>
-    </tr>
-    <tr>
-        <td>xyz+rgb+lobjcls</td>
-        <td><pre lang="shell">python script/train.py --use_color</pre></td>
-        <td>65.00</td>										
-        <td>43.31</td>
-        <td>30.63</td>
-        <td>19.75</td>
-        <td>37.30</td>
-        <td>24.32</td>
-        <td><a href=http://kaldir.vc.in.tum.de/scanrefer_pretrained_XYZ_COLOR_LANGCLS.zip>weights</a></td>
-    </tr>
-    <tr>
-        <td>xyz+rgb+normals+lobjcls</td>
-        <td><pre lang="shell">python script/train.py --use_color --use_normal</pre></td>
-        <td>67.64</td>					
-        <td>46.19</td>
-        <td>32.06</td>
-        <td>21.26</td>
-        <td>38.97</td>
-        <td>26.10</td>
-        <td><a href=http://kaldir.vc.in.tum.de/scanrefer_pretrained_XYZ_COLOR_LANGCLS.zip>weights</a></td>
-    </tr>
-    <tr>
-        <td>xyz+multiview+lobjcls</td>
-        <td><pre lang="shell">python script/train.py --use_multiview</pre></td>
-        <td>76.00</td>															
-        <td>50.40</td>
-        <td>34.05</td>
-        <td>20.73</td>
-        <td>42.19</td>
-        <td>26.50</td>
-        <td><a href=http://kaldir.vc.in.tum.de/scanrefer_pretrained_XYZ_MULTIVIEW_LANGCLS.zip>weights</a></td>
-    </tr>
-    <tr>
-        <td>xyz+multiview+normals+lobjcls</td>
-        <td><pre lang="shell">python script/train.py --use_multiview --use_normal</pre></td>
-        <td>76.33</td>										
-        <td>53.51</td>
-        <td>32.73</td>
-        <td>21.11</td>
-        <td>41.19</td>
-        <td>27.40</td>
-        <td><a href=http://kaldir.vc.in.tum.de/scanrefer_pretrained_XYZ_MULTIVIEW_NORMAL_LANGCLS.zip>weights</a></td>
-    </tr>
-    
-</table>
+![image-Results](demo/Results.png)
 
-If you would like to try out the pre-trained models, please download the model weights and extract the folder to `outputs/`. Note that the results are higher than before because of a few iterations of code refactoring and bug fixing.
+<!-- If you would like to try out the pre-trained models, please download the model weights and extract the folder to `outputs/`. Note that the results are higher than before because of a few iterations of code refactoring and bug fixing.-->
 
 ## Changelog
-11/11/2020: Updated paper with the improved results due to bug fixing.
+04/17/2022: Update Readme.md.
 
-11/05/2020: Released pre-trained weights.
-
-08/08/2020: Fixed the issue with `lib/box_util.py`.
-
-08/03/2020: Fixed the issue with `lib/solver.py` and `script/eval.py`.
-
-06/16/2020: Fixed the issue with multiview features.
-
-01/31/2020: Fixed the issue with bad tokens.
-
-01/21/2020: Released the ScanRefer dataset.
+04/12/2022: Release the codes of 3DVG-Transformer.
 
 ## Citation
 
-If you use the ScanRefer data or code in your work, please kindly cite our work and the original ScanNet paper:
+If you use the ScanRefer data or code in your work, please kindly cite our work 3DVG-Transformer and the original ScanRefer/ScanNet paper:
 
 ```
+@inproceedings{zhao2021_3DVG_Transformer,
+  title={{3DVG-Transformer}: Relation modeling for visual grounding on point clouds},
+  author={Zhao, Lichen and Cai, Daigang and Sheng, Lu and Xu, Dong},
+  booktitle={ICCV},
+  pages={2928--2937},
+  year={2021}
+}
+
 @article{chen2020scanrefer,
-    title={ScanRefer: 3D Object Localization in RGB-D Scans using Natural Language},
+    title={{ScanRefer}: 3D Object Localization in RGB-D Scans using Natural Language},
     author={Chen, Dave Zhenyu and Chang, Angel X and Nie{\ss}ner, Matthias},
-    journal={16th European Conference on Computer Vision (ECCV)},
+    pages={202--221},
+    journal={ECCV},
     year={2020}
 }
 
 @inproceedings{dai2017scannet,
-    title={Scannet: Richly-annotated 3d reconstructions of indoor scenes},
+    title={{Scannet}: Richly-annotated 3d reconstructions of indoor scenes},
     author={Dai, Angela and Chang, Angel X and Savva, Manolis and Halber, Maciej and Funkhouser, Thomas and Nie{\ss}ner, Matthias},
-    booktitle={Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition},
+    booktitle={CVPR},
     pages={5828--5839},
     year={2017}
 }
@@ -301,6 +175,8 @@ If you use the ScanRefer data or code in your work, please kindly cite our work 
 We would like to thank [facebookresearch/votenet](https://github.com/facebookresearch/votenet) for the 3D object detection codebase and [erikwijmans/Pointnet2_PyTorch](https://github.com/erikwijmans/Pointnet2_PyTorch) for the CUDA accelerated PointNet++ implementation.
 
 ## License
+
 ScanRefer is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License](LICENSE).
 
 Copyright (c) 2020 Dave Zhenyu Chen, Angel X. Chang, Matthias Nießner
+
