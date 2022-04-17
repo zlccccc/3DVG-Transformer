@@ -15,6 +15,7 @@ from tqdm import tqdm
 from copy import deepcopy
 
 sys.path.append(os.path.join(os.getcwd())) # HACK add the root folder
+
 from lib.config import CONF
 from lib.dataset import ScannetReferenceDataset
 from lib.solver import Solver

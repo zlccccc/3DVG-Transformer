@@ -11,7 +11,6 @@ from imageio import imread
 from PIL import Image
 from tqdm import tqdm
 
-sys.path.append(os.path.join(os.getcwd())) # HACK add the root folder
 from lib.enet import create_enet_for_3d
 from lib.config import CONF
 

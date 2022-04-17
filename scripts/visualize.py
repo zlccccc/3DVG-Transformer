@@ -16,6 +16,7 @@ from shutil import copyfile
 from plyfile import PlyData, PlyElement
 
 sys.path.append(os.path.join(os.getcwd())) # HACK add the root folder
+
 from utils.pc_utils import write_ply_rgb, write_oriented_bbox
 from utils.box_util import get_3d_box, box3d_iou
 from models.refnet import RefNet
@@ -27,7 +28,7 @@ from lib.loss_helper import get_loss
 from lib.config import CONF
 
 # data
-SCANNET_ROOT = "/mnt/canis/Datasets/ScanNet/public/v2/scans/" # TODO point this to your scannet data
+SCANNET_ROOT = CONF.PATH.SCANNET # TODO point this to your scannet data
 SCANNET_MESH = os.path.join(SCANNET_ROOT, "{}/{}_vh_clean_2.ply") # scene_id, scene_id 
 SCANNET_META = os.path.join(SCANNET_ROOT, "{}/{}.txt") # scene_id, scene_id 
 SCANREFER_TRAIN = json.load(open(os.path.join(CONF.PATH.DATA, "ScanRefer_filtered_train.json")))

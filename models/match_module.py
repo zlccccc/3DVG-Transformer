@@ -9,7 +9,7 @@ import random
 class MatchModule(nn.Module):
     def __init__(self, num_proposals=256, lang_size=256, hidden_size=128, lang_num_size=300, det_channel=288*4, head=4, depth=2):
         super().__init__()
-        self.use_dist_weight_matrix = True
+        self.use_dist_weight_matrix = True  ## False: initial 3DVG-Transformer
 
         self.num_proposals = num_proposals
         self.lang_size = lang_size
@@ -58,15 +58,15 @@ class MatchModule(nn.Module):
             dist_weights = 1 / (dist+1e-2)
             norm = torch.sum(dist_weights, dim=2, keepdim=True)
             dist_weights = dist_weights / norm
-
             zeros = torch.zeros_like(dist_weights)
+
+            # slightly different with our ICCV paper, which leads to higher results (3DVG-Transformer+)
             dist_weights = torch.cat([dist_weights, -dist, zeros, zeros], dim=1).detach()
             attention_matrix_way = 'add'
         else:
             dist_weights = None
             attention_matrix_way = 'mul'
 
-        # dist_weights = None
 
         # object size embedding
         # print(data_dict.keys())

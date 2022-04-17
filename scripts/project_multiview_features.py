@@ -12,7 +12,6 @@ from imageio import imread
 from PIL import Image
 import torchvision.transforms as transforms
 
-sys.path.append(os.path.join(os.getcwd())) # HACK add the root folder
 from lib.config import CONF
 from lib.projection import ProjectionHelper
 

@@ -14,7 +14,6 @@ from datetime import datetime
 from tqdm import tqdm
 from copy import deepcopy
 
-sys.path.append(os.path.join(os.getcwd())) # HACK add the root folder
 from lib.config import CONF
 from lib.dataset5 import ScannetReferenceDataset
 from lib.solver5 import Solver

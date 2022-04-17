@@ -77,6 +77,7 @@ class LangModule(nn.Module):
                 new_word_emb[:new_len] = word_embs[i, main_lang_len[i]:lang_len[i]]
                 new_word_emb[new_len:lang_len[i]] = word_embs[i, :main_lang_len[i]]
                 word_embs[i] = new_word_emb
+        # lang_feat = pack_padded_sequence(word_embs, lang_len.cpu(), batch_first=True, enforce_sorted=False)  # Note: For high-version cuda: .cpu()
         lang_feat = pack_padded_sequence(word_embs, lang_len, batch_first=True, enforce_sorted=False)
 
         out, lang_last = self.gru(lang_feat)

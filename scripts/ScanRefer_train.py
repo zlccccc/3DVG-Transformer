@@ -15,6 +15,7 @@ from datetime import datetime
 from copy import deepcopy
 
 sys.path.append(os.path.join(os.getcwd())) # HACK add the root folder
+
 from data.scannet.model_util_scannet import ScannetDatasetConfig
 from lib.dataset import ScannetReferenceDataset
 from lib.solver import Solver
@@ -29,6 +30,7 @@ SCANREFER_VAL = json.load(open(os.path.join(CONF.PATH.DATA, "ScanRefer_filtered_
 # constants
 DC = ScannetDatasetConfig()
 
+print(sys.path, '<< sys path')
 
 def get_dataloader(args, scanrefer, scanrefer_new, all_scene_list, split, config, augment, shuffle=True):
     dataset = ScannetReferenceDataset(
@@ -117,7 +119,7 @@ def get_num_params(model):
 
 def get_solver(args, dataloader):
     model = get_model(args)
-    # TODO
+    # different lr for various modules.
     weight_dict = {
         'detr': {'lr': 0.0001},
         'lang': {'lr': 0.0005},
@@ -272,11 +274,11 @@ def get_scanrefer(scanrefer_train, scanrefer_val, num_scenes, lang_num_max):
         # print(len(scanrefer_train_new[i]))
     # for i in range(len(scanrefer_val_new)):
     #    print(len(scanrefer_val_new[i]))
-    print("sum", sum)  # 1418 363
+    print("training sample numbers", sum)
     # all scanrefer scene
     all_scene_list = train_scene_list + val_scene_list
 
-    print("train on {} samples and val on {} samples".format(len(new_scanrefer_train), len(new_scanrefer_val)))
+    print("train on {} samples and val on {} samples".format(len(new_scanrefer_train), len(new_scanrefer_val)))  # 1418 363
 
     return new_scanrefer_train, new_scanrefer_val, all_scene_list, scanrefer_train_new, scanrefer_val_new
 

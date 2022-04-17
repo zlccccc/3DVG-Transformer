@@ -15,7 +15,6 @@ from tqdm import tqdm
 from plyfile import PlyData, PlyElement
 from collections import Counter
 
-sys.path.append(os.path.join(os.getcwd())) # HACK add the root folder
 from lib.config import CONF
 from lib.projection import ProjectionHelper
 from lib.enet import create_enet_for_3d
