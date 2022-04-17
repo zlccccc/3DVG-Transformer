@@ -1,8 +1,6 @@
 # 3DVG-Transformer: Relation Modeling for Visual Grounding on Point Clouds
 
-<p align="center"><img src="demo/Visualization.png" width="600px"/></p>
-
-
+![image-Model](demo/Model.png)
 
 ## Introduction
 
@@ -176,7 +174,5 @@ We would like to thank [facebookresearch/votenet](https://github.com/facebookres
 
 ## License
 
-ScanRefer is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License](LICENSE).
-
-Copyright (c) 2020 Dave Zhenyu Chen, Angel X. Chang, Matthias Nießner
+This repository is released under MIT License (see LICENSE file for details).
 
