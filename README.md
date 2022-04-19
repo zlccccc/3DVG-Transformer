@@ -2,7 +2,7 @@
 
 This repository is for the **ICCV 2021** paper "[3DVG-Transformer: Relation Modeling for Visual Grounding on Point Clouds](https://openaccess.thecvf.com/content/ICCV2021/papers/Zhao_3DVG-Transformer_Relation_Modeling_for_Visual_Grounding_on_Point_Clouds_ICCV_2021_paper.pdf)"  
 
-Our method "3DVG-Transformer+" is the **1st method** on the [ScanRefer benchmark](http://kaldir.vc.in.tum.de/scanrefer_benchmark/) (2021/3 - 2021/11) and is the **winner** of the CVPR2021 [1st Workshop on Language for 3D Scenes](https://language3dscenes.github.io/)
+Our method "[3DVG-Transformer+](https://github.com/zlccccc/3DVG-Transformer/blob/main/models/match_module.py#L12)" is the **1st method** on the [ScanRefer benchmark](http://kaldir.vc.in.tum.de/scanrefer_benchmark/) (2021/3 - 2021/11) and is the **winner** of the CVPR2021 [1st Workshop on Language for 3D Scenes](https://language3dscenes.github.io/)
 
 :star2: 3DVG-Transformer+ achieves comparable results with papers published in [CVPR2022]. :star2:
 
