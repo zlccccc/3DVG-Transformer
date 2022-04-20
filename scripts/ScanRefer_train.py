@@ -267,18 +267,15 @@ def get_scanrefer(scanrefer_train, scanrefer_val, num_scenes, lang_num_max):
             scanrefer_val_new_scene.append(data)
         scanrefer_val_new.append(scanrefer_val_new_scene)
 
-    print("scanrefer_train_new", len(scanrefer_train_new), len(scanrefer_val_new), len(scanrefer_train_new[0]))
+    print("scanrefer_train_new", len(scanrefer_train_new), len(scanrefer_val_new), len(scanrefer_train_new[0]))  # 4819 1253 8
     sum = 0
     for i in range(len(scanrefer_train_new)):
         sum += len(scanrefer_train_new[i])
-        # print(len(scanrefer_train_new[i]))
-    # for i in range(len(scanrefer_val_new)):
-    #    print(len(scanrefer_val_new[i]))
-    print("training sample numbers", sum)
+    print("training sample numbers", sum)  # 36665
     # all scanrefer scene
     all_scene_list = train_scene_list + val_scene_list
 
-    print("train on {} samples and val on {} samples".format(len(new_scanrefer_train), len(new_scanrefer_val)))  # 1418 363
+    print("train on {} samples and val on {} samples".format(len(new_scanrefer_train), len(new_scanrefer_val)))  # 36665 9508
 
     return new_scanrefer_train, new_scanrefer_val, all_scene_list, scanrefer_train_new, scanrefer_val_new
 
