@@ -456,7 +456,7 @@ if __name__ == "__main__":
     parser.add_argument("--folder", type=str, help="Folder containing the model")
     parser.add_argument("--gpu", type=str, help="gpu", default="0")
     parser.add_argument("--batch_size", type=int, help="batch size", default=8)
-    parser.add_argument("--lang_num_max", type=int, help="lang num max", default=32)
+    parser.add_argument("--lang_num_max", type=int, help="lang num max", default=1)
     parser.add_argument("--num_points", type=int, default=40000, help="Point Number [default: 40000]")
     parser.add_argument("--num_proposals", type=int, default=256, help="Proposal number [default: 256]")
     parser.add_argument("--num_scenes", type=int, default=-1, help="Number of scenes [default: -1]")
