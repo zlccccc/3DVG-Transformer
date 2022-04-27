@@ -94,7 +94,7 @@ For more training options (like using preprocessed multiview features), please r
 ### Evaluation
 To evaluate the trained models, please find the folder under `outputs/` and run:
 ```shell
-python scripts/ScanRefer_eval.py --folder <folder_name> --reference --use_multiview --no_nms --force --repeat 5
+python scripts/ScanRefer_eval.py --folder <folder_name> --reference --use_multiview --no_nms --force --repeat 5 --lang_num_max 1
 ```
 Note that the flags must match the ones set before training. The training information is stored in `outputs/<folder_name>/info.json`
 
