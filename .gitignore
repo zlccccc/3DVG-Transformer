@@ -1,6 +1,5 @@
 .idea
 data/*
-lib/config.py
 
 # dataset
 data
