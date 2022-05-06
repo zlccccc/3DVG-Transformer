@@ -1,9 +1,7 @@
 .idea
-data/*
+# data/*
 
 # dataset
-data
-data/scanrefer*
 data/ScanRefer*
 data/glove*
 data/scannet/scannet_data
