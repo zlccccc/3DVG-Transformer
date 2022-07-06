@@ -47,7 +47,8 @@ def get_dataloader(args, scanrefer, all_scene_list, split, config, augment):
         use_color=args.use_color, 
         use_height=(not args.no_height),
         use_normal=args.use_normal, 
-        use_multiview=args.use_multiview
+        use_multiview=args.use_multiview,
+        lang_num_max=1
     )
 
     dataloader = DataLoader(dataset, batch_size=args.batch_size, shuffle=False)
